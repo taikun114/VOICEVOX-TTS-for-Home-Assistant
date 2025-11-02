@@ -2,4 +2,4 @@
 
 DOMAIN = "voicevox_tts"
 CONF_SPEAKER = "speaker"
-SUPPORT_LANGUAGES = ["ja-JP"]
+SUPPORT_LANGUAGES = ["ja-JP", "en"]
