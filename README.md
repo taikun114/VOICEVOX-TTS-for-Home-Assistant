@@ -116,5 +116,5 @@ If you configure for use with the Home Assistant's voice assistant “Assist”,
 3. Change the `Text-to-speech` to the one for VOICEVOX TTS and click `UPDATE`.
 
 >[!NOTE]
->If you cannot select VOICEVOX TTS in the `Text-to-speech` section, please make sure that the Language in the `Configuration` is set to `Japanese`.
->VOICEVOX TTS is only available in Japanese, so if it is in another language, you will not be able to select it.
+>If you cannot select VOICEVOX TTS in the `Text-to-speech` section, please make sure that the Language in the `Configuration` is set to `Japanese` or `English`.
+>VOICEVOX TTS is only available in Japanese and English, so if it is in another language, you will not be able to select it.
