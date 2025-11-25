@@ -33,8 +33,8 @@ async def async_setup_entry(
 class VOICEVOXTTSEntity(TextToSpeechEntity):
     def __init__(self, hass: HomeAssistant, config_entry: config_entries.ConfigEntry) -> None:
         self.hass = hass
-        self.name = "VOICEVOX TTS"
-        self._attr_name = f"VOICEVOX TTS"
+        self.name = config_entry.title
+        self._attr_name = config_entry.title
         self._attr_unique_id = config_entry.entry_id
         self._config_entry = config_entry
         self.speaker = config_entry.options.get(CONF_SPEAKER)
