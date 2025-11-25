@@ -15,6 +15,9 @@
         "description": "Choose the voice for VOICEVOX TTS.",
         "data": {
           "speaker": "Voice"
+          "volume": "Default Volume (0.5 - 20.0)",
+          "pitch": "Default Pitch (-0.15 - 0.15)",
+          "speed": "Default Speed (0.5 - 3.0)"
         }
       },
       "reconfigure": {
@@ -44,6 +47,9 @@
         "description": "Choose the voice for VOICEVOX TTS.",
         "data": {
           "speaker": "Voice"
+          "volume": "Default Volume (0.5 - 20.0)",
+          "pitch": "Default Pitch (-0.15 - 0.15)",
+          "speed": "Default Speed (0.5 - 3.0)"
         }
       }
     },

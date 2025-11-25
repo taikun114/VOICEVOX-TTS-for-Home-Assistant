@@ -13,7 +13,7 @@ from homeassistant.core import callback
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_HOST, CONF_PORT
 
-from .const import DOMAIN, CONF_SPEAKER
+from .const import DOMAIN, CONF_SPEAKER, CONF_VOLUME, CONF_PITCH, CONF_SPEED, DEFAULT_VOLUME, DEFAULT_PITCH, DEFAULT_SPEED
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,17 +72,28 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         speaker_options = {str(speaker["id"]): speaker["name"] for speaker in self.speakers}
         speaker_schema = vol.Schema(
             {
-                vol.Required(CONF_SPEAKER): vol.In(speaker_options)
+                vol.Required(CONF_SPEAKER): vol.In(speaker_options),
+                vol.Optional(CONF_VOLUME, default=DEFAULT_VOLUME): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=20.0)),
+                vol.Optional(CONF_PITCH, default=DEFAULT_PITCH): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
+                vol.Optional(CONF_SPEED, default=DEFAULT_SPEED): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
             }
         )
 
         if user_input is not None:
             speaker_id = int(user_input[CONF_SPEAKER])
+            volume = user_input[CONF_VOLUME]
+            pitch = user_input[CONF_PITCH]
+            speed = user_input[CONF_SPEED]
             _LOGGER.debug(f"Set voice to '{speaker_options.get(str(speaker_id))}'")
             return self.async_create_entry(
                 title="VOICEVOX TTS",
                 data=self.config_data,
-                options={CONF_SPEAKER: speaker_id}
+                options={
+                    CONF_SPEAKER: speaker_id,
+                    CONF_VOLUME: volume,
+                    CONF_PITCH: pitch,
+                    CONF_SPEED: speed,
+                }
             )
 
         return self.async_show_form(
@@ -171,12 +182,18 @@ class VOICEVOXTTSOptionsFlowHandler(config_entries.OptionsFlow):
             return self.async_abort(reason="options_updated")
 
         current_speaker_id = str(self._config_entry.options.get(CONF_SPEAKER))
+        current_volume = self._config_entry.options.get(CONF_VOLUME, DEFAULT_VOLUME)
+        current_pitch = self._config_entry.options.get(CONF_PITCH, DEFAULT_PITCH)
+        current_speed = self._config_entry.options.get(CONF_SPEED, DEFAULT_SPEED)
 
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_SPEAKER, default=current_speaker_id): vol.In(speaker_options)
+                    vol.Required(CONF_SPEAKER, default=current_speaker_id): vol.In(speaker_options),
+                    vol.Optional(CONF_VOLUME, default=current_volume): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=20.0)),
+                    vol.Optional(CONF_PITCH, default=current_pitch): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
+                    vol.Optional(CONF_SPEED, default=current_speed): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
                 }
             ),
             errors=errors,
