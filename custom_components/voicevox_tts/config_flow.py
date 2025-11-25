@@ -48,7 +48,7 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         response.raise_for_status()
                         speakers_data = await response.json()
                         self.speakers = [
-                            {"id": style["id"], "name": f"{speaker["name"]}: {style["name"]}"}
+                            {"id": style["id"], "name": f"{speaker['name']}: {style['name']} (ID: {style['id']})"}
                             for speaker in speakers_data
                             for style in speaker["styles"]
                         ]
@@ -164,7 +164,7 @@ class VOICEVOXTTSOptionsFlowHandler(config_entries.OptionsFlow):
                     response.raise_for_status()
                     speakers_data = await response.json()
                     speakers = [
-                        {"id": style["id"], "name": f"{speaker['name']}: {style['name']}"}
+                        {"id": style["id"], "name": f"{speaker['name']}: {style['name']} (ID: {style['id']})"}
                         for speaker in speakers_data
                         for style in speaker["styles"]
                     ]
