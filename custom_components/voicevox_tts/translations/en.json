@@ -17,6 +17,9 @@
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
           "speed": "Default Speed (0.5 - 3.0)"
+        },
+        "data_description": {
+          "volume": "Setting a volume greater than 6 may cause sound cracking or damage to your audio device. It is recommended to set the volume to 6 or higher only if the volume is insufficient with the pitch changed."
         }
       },
       "reconfigure": {
@@ -49,6 +52,9 @@
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
           "speed": "Default Speed (0.5 - 3.0)"
+        },
+        "data_description": {
+          "volume": "Setting a volume greater than 6 may cause sound cracking or damage to your audio device. It is recommended to set the volume to 6 or higher only if the volume is insufficient with the pitch changed."
         }
       }
     },
