@@ -37,6 +37,7 @@ class VOICEVOXTTSEntity(TextToSpeechEntity):
         self._attr_name = f"VOICEVOX TTS"
         self._attr_unique_id = config_entry.entry_id
         self._config_entry = config_entry
+        self.speaker = config_entry.options.get(CONF_SPEAKER)
         self.volume = config_entry.options.get(CONF_VOLUME, DEFAULT_VOLUME)
         self.pitch = config_entry.options.get(CONF_PITCH, DEFAULT_PITCH)
         self.speed = config_entry.options.get(CONF_SPEED, DEFAULT_SPEED)
@@ -52,14 +53,14 @@ class VOICEVOXTTSEntity(TextToSpeechEntity):
     @property
     def supported_options(self) -> list[str]:
         """Return list of supported options."""
-        return [CONF_VOLUME, CONF_PITCH, CONF_SPEED]
+        return [CONF_SPEAKER, CONF_VOLUME, CONF_PITCH, CONF_SPEED]
 
     async def async_get_tts_audio(self, message: str, language: str, options: dict[str, Any]) -> TtsAudioType:
         host = self._config_entry.data.get(CONF_HOST)
         port = self._config_entry.data.get(CONF_PORT)
-        speaker = self._config_entry.options.get(CONF_SPEAKER)
         url = f"http://{host}:{port}"
 
+        speaker = options.get(CONF_SPEAKER, self.speaker)
         volume = options.get(CONF_VOLUME, self.volume)
         pitch = options.get(CONF_PITCH, self.pitch)
         speed = options.get(CONF_SPEED, self.speed)

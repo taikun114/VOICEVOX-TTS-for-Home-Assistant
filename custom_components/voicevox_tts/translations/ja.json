@@ -13,7 +13,7 @@
         "title": "声の選択",
         "description": "VOICEVOX TTSに使用する声を選択してください。",
         "data": {
-          "speaker": "声"
+          "speaker": "デフォルトの声",
           "volume": "デフォルトの音量（0.5 〜 20.0）",
           "pitch": "デフォルトの高さ（-0.15 〜 0.15）",
           "speed": "デフォルトの速度（0.5 〜 3.0）"
@@ -45,7 +45,7 @@
         "title": "VOICEVOX TTSオプションの更新",
         "description": "VOICEVOX TTSに使用する声を選択してください。",
         "data": {
-          "speaker": "声"
+          "speaker": "デフォルトの声",
           "volume": "デフォルトの音量（0.5 〜 20.0）",
           "pitch": "デフォルトの高さ（-0.15 〜 0.15）",
           "speed": "デフォルトの速度（0.5 〜 3.0）"

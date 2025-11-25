@@ -175,9 +175,8 @@ class VOICEVOXTTSOptionsFlowHandler(config_entries.OptionsFlow):
             speaker_options = {}
 
         if user_input is not None:
-            speaker_id = int(user_input[CONF_SPEAKER])
             _LOGGER.debug(f"Change voice to '{speaker_options.get(str(user_input.get(CONF_SPEAKER)))}'")
-            self.hass.config_entries.async_update_entry(self._config_entry, options={CONF_SPEAKER: speaker_id})
+            self.hass.config_entries.async_update_entry(self._config_entry, options=user_input)
             await self.hass.config_entries.async_reload(self._config_entry.entry_id)
             return self.async_abort(reason="options_updated")
 
