@@ -57,6 +57,8 @@ class VOICEVOXTTSEntity(TextToSpeechEntity):
             async with aiohttp.ClientSession() as session:
                 async with session.post(f"{url}/audio_query", params=params) as query_response:
                     query_data = await query_response.json()
+                    query_data['volumeScale']=12.0  ## setting volume (default is 1.0)
+                    query_data['speedScale']=1.1    ## setting speed (pitch) (default is 1.0)
                     _LOGGER.debug("Query fetched successfully. Start fetching audio data")
 
                 async with session.post(f"{url}/synthesis", params={"speaker": speaker}, json=query_data) as synth_response:
