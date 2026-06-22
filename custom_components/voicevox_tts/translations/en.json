@@ -33,7 +33,7 @@
     },
     "error": {
       "timeout": "Connection timed out. Please make sure your configuration is correct.",
-      "error": "Unable to connect. Please make sure that the host and port are correct.",
+      "error": "Failed to connect to the VOICEVOX Engine. Please make sure your configuration is correct.\nIf you are running the engine as an App (formerly Add-on) and cannot connect, try entering '172.30.32.1' for the host.",
       "unknown": "An unexpected error occurred. Please check the log for details.",
       "speaker_fetch_failed": "Failed to fetch voice information. Please check your connection."
     },
