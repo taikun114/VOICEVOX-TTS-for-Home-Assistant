@@ -6,7 +6,7 @@
 > [!NOTE]
 > VOICEVOX TTSを使用するには、[VOICEVOX エンジン](https://github.com/VOICEVOX/voicevox_engine)を実行したサーバーが必要です。
 >
-> [VOICEVOX エンジンのアドオン](https://github.com/taikun114/Home-Assistant-VOICEVOX-Engine)もありますので、こちらを使うこともできます。
+> [VOICEVOX エンジンのアプリ（旧アドオン）](https://github.com/taikun114/Home-Assistant-VOICEVOX-Engine)もありますので、こちらを使うこともできます。
 
 VOICEVOX TTSを利用する際は、[VOICEVOXの利用規約](https://voicevox.hiroshiba.jp/term/)および各キャラクターの利用規約を必ずご覧ください。
 

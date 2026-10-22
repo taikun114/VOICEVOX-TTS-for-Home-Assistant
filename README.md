@@ -6,7 +6,7 @@ This custom integration provides Japanese TTS services using [VOICEVOX](https://
 > [!NOTE]
 > To use VOICEVOX TTS, you need a server running [VOICEVOX Engine](https://github.com/VOICEVOX/voicevox_engine).
 > 
-> [VOICEVOX Engine Addon](https://github.com/taikun114/Home-Assistant-VOICEVOX-Engine) is also available and can be used.
+> [VOICEVOX Engine App (formerly Add-on)](https://github.com/taikun114/Home-Assistant-VOICEVOX-Engine) is also available and can be used.
 
 When using VOICEVOX TTS, please be sure to read [VOICEVOX's Terms of Use](https://voicevox.hiroshiba.jp/term/) and each character's Terms of Use.
 
