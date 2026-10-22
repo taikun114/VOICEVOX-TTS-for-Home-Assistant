@@ -17,11 +17,13 @@
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
           "speed": "Default Speed (0.5 - 3.0)",
-          "use_streaming": "Use audio streaming when available"
+          "use_streaming": "Use audio streaming when available",
+          "process_text_incrementally": "Process input text incrementally"
         },
         "data_description": {
           "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed.",
-          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted."
+          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted.",
+          "process_text_incrementally": "Split streaming text responses from Assist and similar sources at punctuation and send them to the VOICEVOX Engine to start speaking sooner. Synthesizing separate text segments may produce unnatural pauses or intonation, and processing speed may cause gaps between audio segments."
         }
       },
       "reconfigure": {
@@ -54,11 +56,13 @@
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
           "speed": "Default Speed (0.5 - 3.0)",
-          "use_streaming": "Use audio streaming when available"
+          "use_streaming": "Use audio streaming when available",
+          "process_text_incrementally": "Process input text incrementally"
         },
         "data_description": {
           "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed.",
-          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted."
+          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted.",
+          "process_text_incrementally": "Split streaming text responses from Assist and similar sources at punctuation and send them to the VOICEVOX Engine to start speaking sooner. Synthesizing separate text segments may produce unnatural pauses or intonation, and processing speed may cause gaps between audio segments."
         }
       }
     },

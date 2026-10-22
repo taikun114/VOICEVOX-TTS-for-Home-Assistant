@@ -21,10 +21,12 @@ from .const import (
     CONF_PITCH,
     CONF_SPEED,
     CONF_USE_STREAMING,
+    CONF_PROCESS_TEXT_INCREMENTALLY,
     DEFAULT_VOLUME,
     DEFAULT_PITCH,
     DEFAULT_SPEED,
     DEFAULT_USE_STREAMING,
+    DEFAULT_PROCESS_TEXT_INCREMENTALLY,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -89,6 +91,7 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional(CONF_PITCH, default=DEFAULT_PITCH): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
                 vol.Optional(CONF_SPEED, default=DEFAULT_SPEED): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
                 vol.Optional(CONF_USE_STREAMING, default=DEFAULT_USE_STREAMING): BooleanSelector(),
+                vol.Optional(CONF_PROCESS_TEXT_INCREMENTALLY, default=DEFAULT_PROCESS_TEXT_INCREMENTALLY): BooleanSelector(),
             }
         )
 
@@ -107,6 +110,7 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_PITCH: pitch,
                     CONF_SPEED: speed,
                     CONF_USE_STREAMING: user_input.get(CONF_USE_STREAMING, DEFAULT_USE_STREAMING),
+                    CONF_PROCESS_TEXT_INCREMENTALLY: user_input.get(CONF_PROCESS_TEXT_INCREMENTALLY, DEFAULT_PROCESS_TEXT_INCREMENTALLY),
                 }
             )
 
@@ -208,6 +212,7 @@ class VOICEVOXTTSOptionsFlowHandler(config_entries.OptionsFlow):
                     vol.Optional(CONF_PITCH, default=current_pitch): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
                     vol.Optional(CONF_SPEED, default=current_speed): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
                     vol.Optional(CONF_USE_STREAMING, default=self._config_entry.options.get(CONF_USE_STREAMING, DEFAULT_USE_STREAMING)): BooleanSelector(),
+                    vol.Optional(CONF_PROCESS_TEXT_INCREMENTALLY, default=self._config_entry.options.get(CONF_PROCESS_TEXT_INCREMENTALLY, DEFAULT_PROCESS_TEXT_INCREMENTALLY)): BooleanSelector(),
                 }
             ),
             errors=errors,

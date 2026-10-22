@@ -78,6 +78,6 @@ Home Assistantのコンテナが起動した状態で、次のコマンドを実
 docker compose -f compose.test.yaml exec -T homeassistant env PYTHONPATH=/config python - < tests/test_tts.py
 ```
 
-テスト用のHTTPサーバーで、ストリーミング配信、従来APIへの切り替え、エラー処理、初期設定を検証します。実際のエンジンや音声端末での再生確認は別途行ってください。
+テスト用のHTTPサーバーで、ストリーミング配信、従来APIへの切り替え、エラー処理、初期設定を検証します。句読点による入力テキストの分割、音声の連結、先読み、キャンセルも検証します。実際のエンジンや音声端末での再生確認は別途行ってください。
 
 この構成はDockerとDocker Composeを使用した統合開発用です。実際の音声端末や別端末からの接続試験では、Home Assistantの公開アドレスやネットワーク構成を別途調整してください。

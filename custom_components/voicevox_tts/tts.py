@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from collections.abc import AsyncGenerator
+from contextlib import aclosing
 from typing import Any
 import asyncio
 import logging
@@ -28,10 +29,19 @@ from .const import (
     CONF_PITCH,
     CONF_SPEED,
     CONF_USE_STREAMING,
+    CONF_PROCESS_TEXT_INCREMENTALLY,
     DEFAULT_VOLUME,
     DEFAULT_PITCH,
     DEFAULT_SPEED,
     DEFAULT_USE_STREAMING,
+    DEFAULT_PROCESS_TEXT_INCREMENTALLY,
+)
+from .streaming import (
+    AUDIO_CHUNK_SIZE,
+    WavStreamDecoder,
+    async_prefetch,
+    async_split_text,
+    streaming_wav_header,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -57,6 +67,9 @@ class VOICEVOXTTSEntity(TextToSpeechEntity):
         self.pitch = config_entry.options.get(CONF_PITCH, DEFAULT_PITCH)
         self.speed = config_entry.options.get(CONF_SPEED, DEFAULT_SPEED)
         self.use_streaming = config_entry.options.get(CONF_USE_STREAMING, DEFAULT_USE_STREAMING)
+        self.process_text_incrementally = config_entry.options.get(
+            CONF_PROCESS_TEXT_INCREMENTALLY, DEFAULT_PROCESS_TEXT_INCREMENTALLY,
+        )
 
     @property
     def default_language(self):
@@ -73,15 +86,55 @@ class VOICEVOXTTSEntity(TextToSpeechEntity):
 
     async def async_get_tts_audio(self, message: str, language: str, options: dict[str, Any]) -> TtsAudioType:
         try:
-            data = b"".join([chunk async for chunk in self._async_generate_audio(message, options)])
+            source = self._async_generate_audio(message, options)
+            async with aclosing(source):
+                data = b"".join([chunk async for chunk in source])
             return ("wav", data) if data else (None, None)
         except HomeAssistantError:
             return (None, None)
 
     async def async_stream_tts_audio(self, request: TTSAudioRequest) -> TTSAudioResponse:
         """Stream generated audio to Home Assistant."""
+        if self.process_text_incrementally:
+            return TTSAudioResponse(
+                "wav", self._async_generate_incremental_audio(request.message_gen, request.options),
+            )
         message = "".join([chunk async for chunk in request.message_gen])
         return TTSAudioResponse("wav", self._async_generate_audio(message, request.options))
+
+    async def _async_generate_incremental_audio(
+        self, messages: AsyncGenerator[str, None], options: dict[str, Any],
+    ) -> AsyncGenerator[bytes, None]:
+        """Synthesize queued text segments while earlier audio is consumed."""
+        async def joined_audio() -> AsyncGenerator[bytes, None]:
+            audio_format: tuple[int, int, int] | None = None
+            async with aclosing(async_prefetch(async_split_text(messages), maxsize=2)) as segments:
+                async for segment in segments:
+                    if not segment.strip():
+                        continue
+                    _LOGGER.debug("Synthesizing text segment (%s characters)", len(segment))
+                    decoder = WavStreamDecoder()
+                    async with aclosing(self._async_generate_audio(segment, options)) as source:
+                        async for chunk in source:
+                            pcm = decoder.feed(chunk)
+                            if decoder.ready:
+                                if audio_format is None:
+                                    audio_format = decoder.format
+                                    yield streaming_wav_header(audio_format)
+                                elif audio_format != decoder.format:
+                                    raise ValueError("WAV format changed between text segments")
+                            for start in range(0, len(pcm), AUDIO_CHUNK_SIZE):
+                                yield pcm[start:start + AUDIO_CHUNK_SIZE]
+                    decoder.finish()
+
+        try:
+            # 音声のキューを有界にし、再生側への配信と次の合成を並行して進めます。
+            async with aclosing(async_prefetch(joined_audio(), maxsize=8)) as audio:
+                async for chunk in audio:
+                    yield chunk
+        except ValueError as err:
+            _LOGGER.error("Invalid audio while processing text incrementally: %s", err)
+            raise HomeAssistantError("Invalid audio while processing text incrementally") from err
 
     async def _async_generate_audio(self, message: str, options: dict[str, Any]) -> AsyncGenerator[bytes]:
         host = self._config_entry.data.get(CONF_HOST)
