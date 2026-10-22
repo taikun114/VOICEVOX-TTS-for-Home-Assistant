@@ -1,0 +1,21 @@
+homeassistant:
+  name: VOICEVOX検証
+  time_zone: Asia/Tokyo
+  unit_system: metric
+  country: JP
+
+frontend:
+api:
+config:
+history:
+logbook:
+media_source:
+assist_pipeline:
+conversation:
+tts:
+my:
+
+logger:
+  default: warning
+  logs:
+    custom_components.voicevox_tts: debug
