@@ -16,6 +16,8 @@ When using VOICEVOX TTS, please be sure to read [VOICEVOX's Terms of Use](https:
 > If you want to use it with AivisSpeech Engine, please enter the host and port of the server running the AivisSpeech Engine when setting up the VOICEVOX TTS integration.
 
 ## Install
+Requires Home Assistant 2025.6.0 or later.
+
 ### Via HACS
 If you are using HACS (Home Assistant Community Store), click the button below or search for `VOICEVOX TTS` in HACS and install.
 
