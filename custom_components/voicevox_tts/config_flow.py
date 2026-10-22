@@ -10,10 +10,22 @@ from typing import Any
 
 from homeassistant import config_entries
 from homeassistant.core import callback
+from homeassistant.helpers.selector import BooleanSelector
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_HOST, CONF_PORT
 
-from .const import DOMAIN, CONF_SPEAKER, CONF_VOLUME, CONF_PITCH, CONF_SPEED, DEFAULT_VOLUME, DEFAULT_PITCH, DEFAULT_SPEED
+from .const import (
+    DOMAIN,
+    CONF_SPEAKER,
+    CONF_VOLUME,
+    CONF_PITCH,
+    CONF_SPEED,
+    CONF_USE_STREAMING,
+    DEFAULT_VOLUME,
+    DEFAULT_PITCH,
+    DEFAULT_SPEED,
+    DEFAULT_USE_STREAMING,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -76,6 +88,7 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional(CONF_VOLUME, default=DEFAULT_VOLUME): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=20.0)),
                 vol.Optional(CONF_PITCH, default=DEFAULT_PITCH): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
                 vol.Optional(CONF_SPEED, default=DEFAULT_SPEED): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
+                vol.Optional(CONF_USE_STREAMING, default=DEFAULT_USE_STREAMING): BooleanSelector(),
             }
         )
 
@@ -93,6 +106,7 @@ class VOICEVOXTTSConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_VOLUME: volume,
                     CONF_PITCH: pitch,
                     CONF_SPEED: speed,
+                    CONF_USE_STREAMING: user_input.get(CONF_USE_STREAMING, DEFAULT_USE_STREAMING),
                 }
             )
 
@@ -193,6 +207,7 @@ class VOICEVOXTTSOptionsFlowHandler(config_entries.OptionsFlow):
                     vol.Optional(CONF_VOLUME, default=current_volume): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=20.0)),
                     vol.Optional(CONF_PITCH, default=current_pitch): vol.All(vol.Coerce(float), vol.Range(min=-0.15, max=0.15)),
                     vol.Optional(CONF_SPEED, default=current_speed): vol.All(vol.Coerce(float), vol.Range(min=0.5, max=3.0)),
+                    vol.Optional(CONF_USE_STREAMING, default=self._config_entry.options.get(CONF_USE_STREAMING, DEFAULT_USE_STREAMING)): BooleanSelector(),
                 }
             ),
             errors=errors,

@@ -11,6 +11,16 @@ VOICEVOXエンジンを利用するHome AssistantのカスタムTTS統合です�
 - `compose.test.yaml`、`dev/homeassistant/`: Docker Composeによる検証環境と操作手順。
 - `test-config/`: 検証環境の設定や認証情報などの実行時データ。Git管理対象外です。
 
+## ログ出力
+
+- ログには`print`ではなく、`logging.getLogger(__name__)`で取得したロガーを使用してください。
+- ログメッセージは英語で記述してください。
+- 既存のログは残し、処理を共通化する場合も対応するタイミングで出力してください。
+
+## docstring
+
+- モジュール、クラス、関数のdocstringは英語で記述してください。
+
 ## 検証環境
 
 テストが必要だと言われた場合は、以下をリポジトリのルートで実行します。

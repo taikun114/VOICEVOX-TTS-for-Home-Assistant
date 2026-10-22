@@ -17,10 +17,12 @@
           "speaker": "Default Voice",
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
-          "speed": "Default Speed (0.5 - 3.0)"
+          "speed": "Default Speed (0.5 - 3.0)",
+          "use_streaming": "Use audio streaming when available"
         },
         "data_description": {
-          "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed."
+          "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed.",
+          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted."
         }
       },
       "reconfigure": {
@@ -52,10 +54,12 @@
           "speaker": "Default Voice",
           "volume": "Default Volume (0.5 - 20.0)",
           "pitch": "Default Pitch (-0.15 - 0.15)",
-          "speed": "Default Speed (0.5 - 3.0)"
+          "speed": "Default Speed (0.5 - 3.0)",
+          "use_streaming": "Use audio streaming when available"
         },
         "data_description": {
-          "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed."
+          "volume": "Setting a high volume may cause sound cracking or damage to your audio device. It is recommended to use a high volume only if the volume is insufficient with the pitch changed.",
+          "use_streaming": "When running a version of the VOICEVOX Engine that supports streaming talk, audio streaming starts playback before audio generation is complete. Turn this off if audio playback is interrupted."
         }
       }
     },

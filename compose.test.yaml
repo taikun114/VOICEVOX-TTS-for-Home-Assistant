@@ -1,6 +1,13 @@
 name: voicevox-tts-test
 
 services:
+  whisper:
+    image: rhasspy/wyoming-whisper:latest
+    command: ["--model", "small-int8", "--language", "ja"]
+    volumes:
+      - whisper-data:/data
+    stop_grace_period: 60s
+
   voicevox-engine:
     image: voicevox/voicevox_engine:cpu-0.26.0-dev@sha256:f2ae5ed25770866bfbd0e148623a9e560283ba57e487e825bb62edf16b4eabf7
     ports:
@@ -32,3 +39,6 @@ services:
       - ./dev/homeassistant/configuration.yaml:/config/configuration.yaml:ro
       - ./custom_components/voicevox_tts:/config/custom_components/voicevox_tts:ro
     stop_grace_period: 60s
+
+volumes:
+  whisper-data:
