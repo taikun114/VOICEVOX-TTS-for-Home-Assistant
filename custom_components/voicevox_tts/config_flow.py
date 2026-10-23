@@ -33,7 +33,7 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_HOST, default='localhost'): str,
+        vol.Required(CONF_HOST, default='127.0.0.1'): str,
         vol.Required(CONF_PORT, default=50021): int,
     }
 )
