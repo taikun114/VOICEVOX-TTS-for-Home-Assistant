@@ -1,0 +1,30 @@
+name: Package release
+
+on:
+  release:
+    types: [published]
+
+permissions: {}
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Create ZIP
+        run: git archive --format=zip --output="$RUNNER_TEMP/voicevox_tts.zip" HEAD:custom_components/voicevox_tts
+
+      - name: Upload ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/voicevox_tts.zip"
